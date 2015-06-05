@@ -3,28 +3,21 @@
 
 $(document).ready(function(){
 var apiUrl = "http://localhost:3000/";
-setUsers();
-
 var currentUser;
 var userInfo = {};
+setUsers();
+
+
 
 // switch among the fictional users
-$('#users').on('click', function(event){
-      var user_id = event.target.id;
-      currentUser = user_id;
-      $(this).append('<p><h4>The current user is ' + userInfo[currentUser] + '<=</h4><p>');
-      $.ajax({
-        url: apiUrl + 'users/' + user_id + '/guesses',
-        type: 'GET',
-        dataType: 'json'
-      })
-      .done(function(guesses){
+// $('.users div').on('click', function(event){
 
-      })
-      .fail(function(){
-        alert('Error showing current user');
-      });
-    });
+//       var user_id = $(this).data('user-id');
+//       currentUser = user_id;
+//       $(this).append('<div><h4>The current user is ' + userInfo[currentUser] + ' (' + user_id + ')<=</h4></div>');
+//      });
+
+
 
 // set the fictional users
 function setUsers(){
@@ -34,13 +27,18 @@ function setUsers(){
                     dataType: 'json'
                 })
                 .done(function(users_data){
+                    console.log(users_data);
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.users').append('<p data-user-id="' + user.id + '">' + userInfo[currentUser] + '</p>');
-                    console.log(user.id);
-
-                    // $('#users').append('<p id="' + user.id + '">' + user.name + '</p>');
-
+                    $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + '</button>');
+                    $('.users').append('<div id="current-user"></div>')
+                    console.log(userInfo);
+                    // switch among the fictional users
+                    $('button.button-users').on('click', function(event){
+                          var user_id = $(this).data('user-id');
+                          currentUser = user_id;
+                          $('#current-user').html('<div><h4>The current user is ' + userInfo[currentUser] + ' (' + user_id + ')<=</h4></div>');
+                         });
                     })
                 }).fail(function(){
                     alert('Error getting users');
