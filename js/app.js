@@ -101,11 +101,9 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         }
     }).done(function(response) {
         var thisEntry = $('.entry[data-entry-id="' + thisMoviequoteId + '"]');
-        thisEntry.append('<div data-guess-id="' + thisMoviequoteId + '">' + guess + '? <em>by ' + userInfo[currentUser] +'</em></div>');
-        // localStorage.setItem('guess', guess);
-         console.log(guess);
+        thisEntry.append('<div class="guess" data-guess-id="' + thisMoviequoteId + '">' + guess + '? <em>by ' + userInfo[currentUser] +'</em></div>');
 
-        $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val(' ');
+
 
         // retrieve the movie title from the DB to compare with the submitted guess
         var title;
@@ -117,19 +115,14 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
             },
          dataType: "json"
             }).done(function(moviequotes) {
-                console.log(moviequotes.title);
-        }).fail(function() {
-         alert("fail to retrieve title from db");
-        });
-
-
-
-        // if a user finds the solution, add one point
-            if (moviequotes.title === "helllo") {
-                console.log(response.titleguess);
+                var thisTitle = moviequotes.title;
+            // if a user finds the solution, add one point
+            if (thisTitle === guess) {
+                console.log(thisTitle);
                 console.log(guess);
-                alert("we have a winner");
-                $('#submit-guess-button').hide();
+                console.log("we entered the if");
+                // alert("we have a winner");
+                $('#submit-guess-button[data-moviequote-id="'+moviequotes.id+'"]').hide();
                 $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
                 $.ajax({
                 type: 'POST',
@@ -137,14 +130,26 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 dataType: "json"
                     }).done(function(response) {
                     response.points;
+                    console.log(response.points);
 
-                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ', ' + response.points + '</button>');
+                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
 
 
                 }).fail(function() {
                     alert("failed to increment points");
                 });
             };
+            // end of if statement
+
+
+        }).fail(function() {
+         alert("fail to retrieve title from db");
+        });
+        // $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val(' ');
+
+
+
+
 
 
 
