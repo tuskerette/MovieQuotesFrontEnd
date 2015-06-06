@@ -20,7 +20,7 @@ function setUsers(){
                 .done(function(users_data){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + ', ' + user.points + '</button>');
+                    $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button>');
                     $('.users').append('<div id="current-user"></div>')
 
                     // switch among the fictional users
@@ -65,7 +65,7 @@ $('#new-moviequote-button').click(function() {
             title: $("#new-title").val().toLowerCase(),
         };
         $('#new-quote').val(' ');
-        $('#new-title').val(' ')
+        $('#new-title').val(' ');
 
         $.ajax({
             type: 'POST',
@@ -85,9 +85,8 @@ $('#new-moviequote-button').click(function() {
 //Submit a guess (POST)
 $('body').on("click", '#submit-guess-button', function(moviequotes) {
     var thisMoviequoteId = $(this).attr('data-moviequote-id');
-    console.log(thisMoviequoteId);
     var guess = $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val().toLowerCase();
-    console.log(guess);
+
     var submitguess = {
         titleguess: guess,
         user_id: currentUser
@@ -102,29 +101,51 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         }
     }).done(function(response) {
         var thisEntry = $('.entry[data-entry-id="' + thisMoviequoteId + '"]');
-        thisEntry.append('<div>' + guess + '? <em>by ' + userInfo[currentUser] +'</em></div>');
+        thisEntry.append('<div data-guess-id="' + thisMoviequoteId + '">' + guess + '? <em>by ' + userInfo[currentUser] +'</em></div>');
+        // localStorage.setItem('guess', guess);
+         console.log(guess);
 
-        // // if a user finds the solution, add one point
-        //     if (response.titleguess === guess) {
+        $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val(' ');
 
-        //         alert("we have a winner");
-        //         $('#submit-guess-button').hide();
-        //         $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
-        //         $.ajax({
-        //         type: 'POST',
-        //         url: apiUrl + "users/" + localStorage['id'] + "/increment_points",
-        //         dataType: "json"
-        //             }).done(function(response) {
-        //             response.points;
+        // retrieve the movie title from the DB to compare with the submitted guess
+        var title;
+        $.ajax({
+         type: 'GET',
+         url: apiUrl + "moviequotes/" + thisMoviequoteId,
+         data: { moviequotes: {
+             title: title}
+            },
+         dataType: "json"
+            }).done(function(moviequotes) {
+                console.log(moviequotes.title);
+        }).fail(function() {
+         alert("fail to retrieve title from db");
+        });
 
-        //             $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ', ' + response.points + '</button>');
 
 
-        //         }).fail(function() {
-        //             alert("failed to increment points");
-        //         });
-        //     };
-             $('#new-guess').val(' ');
+        // if a user finds the solution, add one point
+            if (moviequotes.title === "helllo") {
+                console.log(response.titleguess);
+                console.log(guess);
+                alert("we have a winner");
+                $('#submit-guess-button').hide();
+                $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
+                $.ajax({
+                type: 'POST',
+                url: apiUrl + "users/" + localStorage['id'] + "/increment_points",
+                dataType: "json"
+                    }).done(function(response) {
+                    response.points;
+
+                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ', ' + response.points + '</button>');
+
+
+                }).fail(function() {
+                    alert("failed to increment points");
+                });
+            };
+
 
 
     }).fail(function() {
