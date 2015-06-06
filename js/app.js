@@ -9,16 +9,6 @@ setUsers();
 
 
 
-// switch among the fictional users
-// $('.users div').on('click', function(event){
-
-//       var user_id = $(this).data('user-id');
-//       currentUser = user_id;
-//       $(this).append('<div><h4>The current user is ' + userInfo[currentUser] + ' (' + user_id + ')<=</h4></div>');
-//      });
-
-
-
 // set the fictional users
 function setUsers(){
                 $.ajax({
@@ -30,14 +20,16 @@ function setUsers(){
                     console.log(users_data);
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + '</button>');
+                    $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + ', ' + user.points + '</button>');
                     $('.users').append('<div id="current-user"></div>')
                     console.log(userInfo);
                     // switch among the fictional users
                     $('button.button-users').on('click', function(event){
                           var user_id = $(this).data('user-id');
+
                           currentUser = user_id;
-                          $('#current-user').html('<div><h4>The current user is ' + userInfo[currentUser] + ' (' + user_id + ')<=</h4></div>');
+                          localStorage.setItem('id', user_id);
+                          $('#current-user').html('<div><h4>The current user is ' + userInfo[currentUser] + '</h4></div>');
                          });
                     })
                 }).fail(function(){
@@ -97,7 +89,6 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         titleguess: guess,
         user_id: currentUser
     };
-    $('#new-guess').val(' ');
 
     $.ajax({
         type: 'POST',
@@ -108,24 +99,28 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         }
     }).done(function(response) {
         $('.entry[data-entry-id="' + thisMoviequoteId + '"]').append('<p>' + guess + '? <em>by ' + userInfo[currentUser] +'</em></p>');
+
         // if a user finds the solution, add one point
-            if (response.title === guess) {
+            if (response.titleguess === guess) {
+
                 alert("we have a winner");
                 $('#submit-guess-button').hide();
-                $('.entry[data-entry-id="' + thisMoviequoteId+ '"]').append('SOLVED!');
+                $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
                 $.ajax({
                 type: 'POST',
-                url: apiUrl + "users/" + currentUser + "/increment_points",
+                url: apiUrl + "users/" + localStorage['id'] + "/increment_points",
                 dataType: "json"
                     }).done(function(response) {
-                    console.log(response.points);
+                    response.points;
 
-                    // Increment points and show it by the user!!
+                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ', ' + response.points + '</button>');
+
 
                 }).fail(function() {
                     alert("failed to increment points");
                 });
             };
+            $('#new-guess').val(' ');
 
 
     }).fail(function() {
@@ -144,7 +139,7 @@ $('body').on("click", '#delete-moviequote-button', function(moviequotes) {
           url: apiUrl + "moviequotes/" + thisMoviequoteId,
           dataType: "json"
         }).done(function(response) {
-            alert("comment deleted");
+            alert("movie quote deleted");
     });
   });
 
@@ -152,31 +147,6 @@ $('body').on("click", '#delete-moviequote-button', function(moviequotes) {
 $('#refresh-button').click();
 
 
-// // Update a new Movie Quote (PATCH)
-// $('body').on('click', '#update-moviequote-button', function(moviequotes) {
-//         $('#update-moviequote').show();
-//         $('body').on('click', '#edit-moviequote-button', function() {
-//             var thisMoviequoteId = $('#update-moviequote-button').attr('data-moviequote-id');
-//             var moviequote = {
-//             quote: $('#update-quote').val(),
-//             title: $("#update-title").val(),
-//             };
-
-
-//         $.ajax({
-//             type: 'POST',
-//             url: apiUrl + "moviequotes/" + thisMoviequoteId,
-//             data: {
-//                 moviequote: moviequote
-//             },
-//             dataType: "json"
-//         }).done(function() {
-//             alert("quote edited successfully");
-//         }).fail(function() {
-//             alert("fail to edit movie quote");
-//         });
-//     });
-// });
 
 
 });
