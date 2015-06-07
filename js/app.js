@@ -10,7 +10,7 @@ setUsers();
 
 
 
-// set the fictional users
+// Set the fictional users
 function setUsers(){
                 $.ajax({
                     type: 'GET',
@@ -20,7 +20,7 @@ function setUsers(){
                 .done(function(users_data){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button>');
+                    $('.users').prepend('<div class="form-group"><button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button></div>');
                     $('.users').append('<div id="current-user"></div>');
 
 
@@ -33,22 +33,21 @@ function setUsers(){
                           $('#current-user').html('<div><h4>The current user is ' + userInfo[currentUser] + '</h4></div>');
                          });
                     });
-                    $('.users').append('<button type="button" class="button-reset-points">Reset points for selected user</button>');
+                    $('.users').append('<br /><button type="button" class="button-reset-points btn btn-default">Reset points for selected user</button>');
                 }).fail(function(){
                     alert('Error getting users');
                  });
 };
 
 
-// reset the points of the users
+// Reset the points of the users (PATCH)
 $('body').on("click", 'button.button-reset-points', function() {
                 $.ajax({
                 type: 'PATCH',
                 url: apiUrl + "users/" + localStorage['id'] + "/reset_points",
                 dataType: "json"
                     }).done(function(response) {
-                    response.points;
-                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
+                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users btn btn-default" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
 
 
                 }).fail(function() {
@@ -70,20 +69,20 @@ $('#refresh-button').click(function() {
             response.forEach(function(moviequotes) {
                 $("#all-moviequotes").prepend('<div class= "entry" data-entry-id="' + moviequotes.id + '"></div><hr />');
                 var thisEntry = $('.entry[data-entry-id="' + moviequotes.id+ '"]');
-                thisEntry.append('<div data-moviequote-id="'+moviequotes.id+'"><h3>' + moviequotes.quote + '</h3></div>');
-                thisEntry.append('<button id="delete-moviequote-button" data-moviequote-id="' +moviequotes.id + '">Delete Movie Quote</button><br />');
-                thisEntry.append('Guess the title: <br /><input type="text" name="guess" placeholder="Guess" id="new-guess" data-moviequote-id="'+moviequotes.id+'">? <button id="submit-guess-button" data-moviequote-id="'+moviequotes.id+'">Submit Guess</button><br />');
+                thisEntry.append('<div data-moviequote-id="'+moviequotes.id+'"><h3>"' + moviequotes.quote + '"</h3></div>');
+                thisEntry.append('<button id="delete-moviequote-button" data-moviequote-id="' +moviequotes.id + '" class="btn btn-default">Delete Movie Quote</button><br />');
+                thisEntry.append('Guess the title: <br /><div class="form-group"><input type="text" name="guess" class="form-control" placeholder="Guess" id="new-guess" data-moviequote-id="'+moviequotes.id+'"> <br /><button class="btn btn-default" id="submit-guess-button" data-moviequote-id="'+moviequotes.id+'">Submit Guess</button></div><br />');
 
             })
         }).fail(function() {
-            alert("failure");
+            alert("failed to display movie quotes");
         });
     });
 
 // Create a new Movie Quote (POST)
 $('#new-moviequote-button').click(function() {
         var moviequote = {
-            quote: $('#new-quote').val().toLowerCase(),
+            quote: $('#new-quote').val(),
             title: $("#new-title").val().toLowerCase(),
         };
         $('#new-quote').val(' ');
@@ -125,7 +124,7 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         thisEntry.append('<div class="guess" data-guess-id="' + thisMoviequoteId + '">' + guess + '? <em>by ' + userInfo[currentUser] +'</em></div>');
 
 
-        // retrieve the movie title from the DB to compare with the submitted guess
+        // Retrieve the movie title from the DB to compare with the submitted guess
         var title;
         $.ajax({
          type: 'GET',
@@ -146,7 +145,7 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 dataType: "json"
                     }).done(function(response) {
                     response.points;
-                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
+                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users btn btn-default" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
 
 
                 }).fail(function() {
