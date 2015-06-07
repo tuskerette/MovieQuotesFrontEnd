@@ -36,11 +36,26 @@
 .page-header small {
   color: #CCC;
 }
-.navbar-brand {
-  font-family: 'Fascinate Inline', cursive;
+
+h1 {
+   font-family: 'Ultra', serif;
 }
 
+/*Lettering.js settings*/
+.fancy_title {
+  margin-left: 3px; }
 
+.fancy_title span {
+  display: inline-block;
+  position: relative;
+  letter-spacing: 0;
+  -webkit-transition: all 0.2s ease-out;
+}
+
+.fancy_title span:hover {
+  top:4px;
+}
+/*end of Lettering.js settings*/
 
 /*skrollr settings*/
   html, body {

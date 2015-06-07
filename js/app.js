@@ -8,6 +8,8 @@ var currentUser;
 var userInfo = {};
 setUsers();
 skrollr.init();
+ $(".fancy_title").lettering();
+
 
 
 
