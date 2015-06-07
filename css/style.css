@@ -1,3 +1,5 @@
+/*Layout*/
+
 .form-control {
   width: 300px;
 }
@@ -11,26 +13,36 @@
 }
 .navbar-header {
   margin-top: 20px;
-  color: #777;
+  color: #333;
 }
 
 .page-header {
   margin-top: 220px;
 }
-.page-header small {
-  color: #CCC;
-}
+
 .button-reset-points {
   float:right;
   clear:left;
 }
 
+
+
+/*Look*/
+
 .glyphicon {
   font-size:2em;
   letter-spacing: 1.5em;
-  }
+}
+.page-header small {
+  color: #CCC;
+}
+.navbar-brand {
+  font-family: 'Fascinate Inline', cursive;
+}
 
-/*skrollr */
+
+
+/*skrollr settings*/
   html, body {
     padding:0;
     margin:0;
@@ -39,9 +51,7 @@
     background-attachment:fixed;
     color:#fff;
     font-family:sans-serif;
-
   }
-  /*a {color:#eee;}*/
   .hidden {display:none;}
 
   /*end of skrollr*/
