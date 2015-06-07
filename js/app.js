@@ -21,7 +21,8 @@ function setUsers(){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
                     $('.users').prepend('<button type="button" class="button-users" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button>');
-                    $('.users').append('<div id="current-user"></div>')
+                    $('.users').append('<div id="current-user"></div>');
+
 
                     // switch among the fictional users
                     $('button.button-users').on('click', function(event){
@@ -31,11 +32,32 @@ function setUsers(){
                           localStorage.setItem('id', user_id);
                           $('#current-user').html('<div><h4>The current user is ' + userInfo[currentUser] + '</h4></div>');
                          });
-                    })
+                    });
+                    $('.users').append('<button type="button" class="button-reset-points">Reset points for selected user</button>');
                 }).fail(function(){
                     alert('Error getting users');
                  });
 };
+
+
+// reset the points of the users
+$('body').on("click", 'button.button-reset-points', function() {
+                $.ajax({
+                type: 'PATCH',
+                url: apiUrl + "users/" + localStorage['id'] + "/reset_points",
+                dataType: "json"
+                    }).done(function(response) {
+                    response.points;
+                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
+
+
+                }).fail(function() {
+                    alert("failed to reset points");
+                });
+    });
+
+
+
 
 // Display the Movie Quotes (GET)
 $('#refresh-button').click(function() {
@@ -86,7 +108,6 @@ $('#new-moviequote-button').click(function() {
 $('body').on("click", '#submit-guess-button', function(moviequotes) {
     var thisMoviequoteId = $(this).attr('data-moviequote-id');
     var guess = $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val().toLowerCase();
-
     var submitguess = {
         titleguess: guess,
         user_id: currentUser
@@ -104,7 +125,6 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         thisEntry.append('<div class="guess" data-guess-id="' + thisMoviequoteId + '">' + guess + '? <em>by ' + userInfo[currentUser] +'</em></div>');
 
 
-
         // retrieve the movie title from the DB to compare with the submitted guess
         var title;
         $.ajax({
@@ -118,10 +138,6 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 var thisTitle = moviequotes.title;
             // if a user finds the solution, add one point
             if (thisTitle === guess) {
-                console.log(thisTitle);
-                console.log(guess);
-                console.log("we entered the if");
-                // alert("we have a winner");
                 $('#submit-guess-button[data-moviequote-id="'+moviequotes.id+'"]').hide();
                 $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
                 $.ajax({
@@ -130,8 +146,6 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 dataType: "json"
                     }).done(function(response) {
                     response.points;
-                    console.log(response.points);
-
                     $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
 
 
@@ -145,13 +159,6 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
         }).fail(function() {
          alert("fail to retrieve title from db");
         });
-        // $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val(' ');
-
-
-
-
-
-
 
     }).fail(function() {
         alert("could not post guess");
@@ -159,7 +166,11 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
 });
 
 
-
+// // FIX: trying to clean up the input guess field
+// $('body').on("click",'#new-guess', function() {
+//     console.log("i'm here, trying to clean");
+//             $(this).val(' ');
+//         });
 
 // Delete a Movie Quote (DELETE)
 $('body').on("click", '#delete-moviequote-button', function(moviequotes) {
