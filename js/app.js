@@ -21,7 +21,7 @@ function setUsers(){
                 .done(function(users_data){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.users').prepend('<div class="form-group"><button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button></div>');
+                    $('.users').prepend('<button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button>');
                     $('.users').append('<div id="current-user"></div>');
 
 
@@ -31,10 +31,10 @@ function setUsers(){
 
                           currentUser = user_id;
                           localStorage.setItem('id', user_id);
-                          $('#current-user').html('<div><h4>The current user is ' + userInfo[currentUser] + '</h4></div>');
+                          $('#current-user').html('<div><h5>The current player is </h5><h4>' + userInfo[currentUser] + '</h4></div>');
                          });
                     });
-                    $('.users').append('<br /><button type="button" class="button-reset-points btn btn-default">Reset points for selected user</button>');
+                    $('.users').prepend('<button type="button" class="button-reset-points btn btn-warning">Reset points for selected user</button>');
                 }).fail(function(){
                     alert('Error getting users');
                  });
@@ -104,7 +104,7 @@ $('#new-moviequote-button').click(function() {
         });
     });
 
-//Submit a guess (POST)
+// Submit a guess (POST)
 $('body').on("click", '#submit-guess-button', function(moviequotes) {
     var thisMoviequoteId = $(this).attr('data-moviequote-id');
     var guess = $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val().toLowerCase();
