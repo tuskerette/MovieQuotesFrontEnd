@@ -3,26 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>Guess the Movie</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
 </head>
-<body>
+<body data-0="background-image:linear-gradient(0deg, hsl(0, 100%, 50%), hsl(40, 50%, 50%));" data-5000="background-image:linear-gradient(3600deg, hsl(360, 100%, 50%), hsl(400, 100%, 50%));">
+<div id="skrollr-body">
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">
-        <img alt="Brand" src="...">
+        <!-- <img alt="Brand" src="..." class="img-circle"> -->
       </a>
     </div>
   </div>
 </nav>
-<div class="page-header">
-  <h1>Guess the Movie <small>Can you guess where these quotes are from?</small></h1>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Guess the Movie</h1>
+    <p>Can you guess where these quotes are from?</p>
+  </div>
 </div>
+
+<!-- <div class="page-header">
+  <h1>Guess the Movie <small>Can you guess where these quotes are from?</small></h1>
+</div> -->
 
 
 <div class="container-fluid">
@@ -62,31 +71,18 @@
 
 
 
-
-
-  <div class="form-group">
-    <label for="exampleInputName2">Name</label>
-    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail2">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-  </div>
-  <button type="submit" class="btn btn-default">Send invitation</button>
-
-
-
-
 <footer class="footer">
   <div class="container">
-  View on Github { <a href="https://github.com/tuskerette/MovieQuotesFrontEnd" target="_blank">FrontEnd</a> | <a href="https://github.com/tuskerette/moviequotesrailsapp" target="_blank">BackEnd</a> } | &copy; Valeria Graffeo 2015
+    <div class="col-md-6 col-md-offset-3">
+    View on Github { <a href="https://github.com/tuskerette/MovieQuotesFrontEnd" target="_blank">FrontEnd</a> | <a href="https://github.com/tuskerette/moviequotesrailsapp" target="_blank">BackEnd</a> } | &copy; Valeria Graffeo 2015
+    </div>
   </div>
 </footer>
 
-
+</div>
+<script type="text/javascript" src="../dist/skrollr.min.js"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script src="js/app.js"></script>
 </body>
 </html>

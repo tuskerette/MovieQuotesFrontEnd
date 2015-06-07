@@ -7,6 +7,7 @@ var apiUrl = "http://localhost:3000/";
 var currentUser;
 var userInfo = {};
 setUsers();
+skrollr.init();
 
 
 
@@ -187,6 +188,7 @@ $('body').on("click", '#delete-moviequote-button', function(moviequotes) {
 
 
 $('#refresh-button').click();
+$('#refresh-button').addClass('invisible');
 
 
 
