@@ -54,9 +54,9 @@ function getPoints(){
                 .done(function(users_data){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.scoreboard').append('<div class="score-users" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + user.name + ' | Points: ' + user.points + '</div>');
+                    $('.scoreboard').prepend('<div class="score-users" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly" aria-hidden="true"></span>' + user.name + ' | Points: ' + user.points + '</div>');
                         });
-                    $('.scoreboard').append('<p><button type="button" class="button-reset-points btn btn-warning">Reset points for selected user</button></p>');
+                    $('.scoreboard').prepend('<h4>SCOREBOARD</h4>')
                 }).fail(function(){
                     alert('Error getting the scoreboard');
                  });
@@ -164,6 +164,7 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
             if (thisTitle === guess) {
                 $('#submit-guess-button[data-moviequote-id="'+moviequotes.id+'"]').addClass('hidden');
                 $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
+                // increment points
                 $.ajax({
                 type: 'POST',
                 url: apiUrl + "users/" + localStorage['id'] + "/increment_points",
