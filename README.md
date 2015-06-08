@@ -25,7 +25,7 @@
 - It was built with Bootstrap 3.3.4.
 - Limitations and known issues: when reloading the page, the previously solved quotes are open again.
 The guess field does not clear after the submission of a guess. The buttons change status in the view when the "reset points" action is called.
-- Further development: add authentication for the users. Add Handlebars to managethe dynamic content. Better string interpolation to match the guess to the title.
+- Further development: add authentication for the users. Add Handlebars to managethe dynamic content. Better string interpolation to match the guess to the title and avoid dupicates or blank fileds. Fix the responsive part for mobile view.
 
 * **Colophon**
 

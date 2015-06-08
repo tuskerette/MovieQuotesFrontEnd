@@ -25,7 +25,6 @@ function setUsers(){
                     userInfo[user.id] = user.name;
 
                     $('.users').append('<button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + user.name + '</button>');
-                    // $('.users').append('<div id="current-user"></div>');
 
 
 

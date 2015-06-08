@@ -81,3 +81,32 @@ h1 {
   .hidden {display:none;}
 
   /*end of skrollr*/
+
+
+/*Media Query*/
+
+@media (max-width: 700px) {
+  .navbar {
+    height: 180px;
+  }
+
+  .fancy_title {
+    font-size: 90%;
+  }
+
+  .scoreboard {
+    width: 40%;
+    height: 40%;
+    padding-left: 30px;
+    font-size: 11px;
+  }
+
+  .glyphicon {
+  font-size:0.8em;
+
+  }
+
+  .page-header {
+  margin-top: 210px;
+  }
+}
