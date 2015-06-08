@@ -110,8 +110,8 @@ $('#new-moviequote-button').click(function() {
             quote: $('#new-quote').val(),
             title: $("#new-title").val().toLowerCase(),
         };
-        $('#new-quote').val(' ');
-        $('#new-title').val(' ');
+        $('#new-quote').val('');
+        $('#new-title').val('');
 
         $.ajax({
             type: 'POST',
