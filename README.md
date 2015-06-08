@@ -11,7 +11,7 @@
 
 * **Overview and Example usage**
 
-- There are four fictional players to choose from.
+- There are two fictional players to choose from.
 - Anyone visiting the website can add and delete a movie quote to and from the database, but only players can score points if their guess is correct.
 - When a guess matches the title entered originally, the player gets a point and the quote does not accept further guesses (status SOLVED.)
 
@@ -24,8 +24,8 @@
 - The app is linked to the js/app.js file.
 - It was built with Bootstrap 3.3.4.
 - Limitations and known issues: when reloading the page, the previously solved quotes are open again.
-The guess field does not clear after the submission of a guess. The buttons change status in the view when the "reset points" action is called. Some issues on mobile view, despite the responsiveness of Bootstrap.
-- Further development: add Handlebars to managethe dynamic content.
+The guess field does not clear after the submission of a guess. The buttons change status in the view when the "reset points" action is called.
+- Further development: add authentication for the users. Add Handlebars to managethe dynamic content. Better string interpolation to match the guess to the title.
 
 * **Colophon**
 

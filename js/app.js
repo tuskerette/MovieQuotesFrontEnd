@@ -9,7 +9,7 @@ var userInfo = {};
 setUsers();
 skrollr.init();
  $(".fancy_title").lettering();
-
+getPoints();
 
 
 
@@ -23,8 +23,10 @@ function setUsers(){
                 .done(function(users_data){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-                    $('.users').prepend('<button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '">' + user.name + ' | Points: ' + user.points + '</button>');
-                    $('.users').append('<div id="current-user"></div>');
+
+                    $('.users').append('<button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + user.name + '</button>');
+                    // $('.users').append('<div id="current-user"></div>');
+
 
 
                     // switch among the fictional users
@@ -36,11 +38,32 @@ function setUsers(){
                           $('#current-user').html('<div><h5>The current player is </h5><h4>' + userInfo[currentUser] + '</h4></div>');
                          });
                     });
-                    $('.users').prepend('<button type="button" class="button-reset-points btn btn-warning">Reset points for selected user</button>');
+
                 }).fail(function(){
                     alert('Error getting users');
                  });
 };
+
+// Scoreboard shown on top right
+function getPoints(){
+                $.ajax({
+                    type: 'GET',
+                    url: apiUrl + 'users/',
+                    dataType: 'json'
+                })
+                .done(function(users_data){
+                    users_data.forEach(function(user){
+                    userInfo[user.id] = user.name;
+                    $('.scoreboard').append('<div class="score-users" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + user.name + ' | Points: ' + user.points + '</div>');
+                        });
+                    $('.scoreboard').append('<p><button type="button" class="button-reset-points btn btn-warning">Reset points for selected user</button></p>');
+                }).fail(function(){
+                    alert('Error getting the scoreboard');
+                 });
+
+
+}
+
 
 
 // Reset the points of the users (PATCH)
@@ -50,8 +73,7 @@ $('body').on("click", 'button.button-reset-points', function() {
                 url: apiUrl + "users/" + localStorage['id'] + "/reset_points",
                 dataType: "json"
                     }).done(function(response) {
-                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users btn btn-default" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
-
+                    $('div[data-user-id="'+ response.id + '"]').html('<div class="score-users" data-user-id="' + response.id + '"><span class="glyphicon glyphicon-ice-lolly" aria-hidden="true"></span>' + response.name + ' | Points: ' + response.points + '</div>');
 
                 }).fail(function() {
                     alert("failed to reset points");
@@ -74,7 +96,7 @@ $('#refresh-button').click(function() {
                 var thisEntry = $('.entry[data-entry-id="' + moviequotes.id+ '"]');
                 thisEntry.append('<div data-moviequote-id="'+moviequotes.id+'"><h3>"' + moviequotes.quote + '"</h3></div>');
                 thisEntry.append('<button id="delete-moviequote-button" data-moviequote-id="' +moviequotes.id + '" class="btn btn-default">Delete Movie Quote</button><br />');
-                thisEntry.append('Guess the title: <br /><div class="form-group"><input type="text" name="guess" class="form-control" placeholder="Guess" id="new-guess" data-moviequote-id="'+moviequotes.id+'"> <br /><button class="btn btn-default" id="submit-guess-button" data-moviequote-id="'+moviequotes.id+'">Submit Guess</button></div><br />');
+                thisEntry.append('Guess the title: <br /><input type="text" name="guess" class="form-control" placeholder="Guess" id="new-guess" data-moviequote-id="'+moviequotes.id+'"> <br /><button class="btn btn-default" id="submit-guess-button" data-moviequote-id="'+moviequotes.id+'">Submit Guess</button><br />');
 
             })
         }).fail(function() {
@@ -140,7 +162,7 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 var thisTitle = moviequotes.title;
             // if a user finds the solution, add one point
             if (thisTitle === guess) {
-                $('#submit-guess-button[data-moviequote-id="'+moviequotes.id+'"]').hide();
+                $('#submit-guess-button[data-moviequote-id="'+moviequotes.id+'"]').addClass('hidden');
                 $('.entry[data-entry-id="' +thisMoviequoteId+ '"]').append('SOLVED!');
                 $.ajax({
                 type: 'POST',
@@ -148,7 +170,7 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 dataType: "json"
                     }).done(function(response) {
                     response.points;
-                    $('button[data-user-id="'+ response.id + '"]').html('<button type="button" class="button-users btn btn-default" data-user-id="' + response.id + '">' + response.name + ' | ' + response.points + '</button>');
+                    $('div[data-user-id="'+ response.id + '"]').html('<div class="score-users" data-user-id="' + response.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + response.name + ' | Points: ' + response.points + '</div>');
 
 
                 }).fail(function() {

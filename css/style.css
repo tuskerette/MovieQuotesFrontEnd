@@ -9,29 +9,40 @@
 }
 
 .navbar {
-  height: 180px;
+  height: 115px;
 }
+
 .navbar-header {
-  margin-top: 20px;
   color: #333;
+}
+.navbar-brand {
+  padding-top:10px;
+  padding-top: 10px;
 }
 
 .page-header {
-  margin-top: 220px;
+  margin-top: 110px;
 }
 
-.button-reset-points {
-  float:right;
-  clear:left;
+p {
+  margin-bottom: 10px;
+}
+
+.button-users {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.score-users {
+  margin-bottom: 5px;
 }
 
 
-
-/*Look*/
+/*Appearance*/
 
 .glyphicon {
-  font-size:2em;
-  letter-spacing: 1.5em;
+  font-size:1.5em;
+  letter-spacing: 1em;
 }
 .page-header small {
   color: #CCC;
