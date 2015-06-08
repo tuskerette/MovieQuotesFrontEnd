@@ -2,8 +2,8 @@
 
 
 $(document).ready(function(){
-// var apiUrl = "https://ancient-fortress-5331.herokuapp.com/";
-var apiUrl = "http://localhost:3000/";
+var apiUrl = "https://ancient-fortress-5331.herokuapp.com/";
+// var apiUrl = "http://localhost:3000/";
 var currentUser;
 var userInfo = {};
 setUsers();
