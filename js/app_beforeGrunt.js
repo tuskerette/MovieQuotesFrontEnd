@@ -42,7 +42,7 @@ function setUsers(){
                 }).fail(function(){
                     alert('Error getting users');
                  });
-}
+};
 
 // Scoreboard shown on top right
 function getPoints(){
@@ -56,7 +56,7 @@ function getPoints(){
                     userInfo[user.id] = user.name;
                     $('.scoreboard').prepend('<div class="score-users" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly" aria-hidden="true"></span>' + user.name + ' | Points: ' + user.points + '</div>');
                         });
-                    $('.scoreboard').prepend('<h4>SCOREBOARD</h4>');
+                    $('.scoreboard').prepend('<h4>SCOREBOARD</h4>')
                 }).fail(function(){
                     alert('Error getting the scoreboard');
                  });
@@ -98,7 +98,7 @@ $('#refresh-button').click(function() {
                 thisEntry.append('<button id="delete-moviequote-button" data-moviequote-id="' +moviequotes.id + '" class="btn btn-default">Delete Movie Quote</button><br />');
                 thisEntry.append('Guess the title: <br /><input type="text" name="guess" class="form-control" placeholder="Guess" id="new-guess" data-moviequote-id="'+moviequotes.id+'"> <br /><button class="btn btn-default" id="submit-guess-button" data-moviequote-id="'+moviequotes.id+'">Submit Guess</button><br />');
 
-            });
+            })
         }).fail(function() {
             alert("failed to display movie quotes");
         });
@@ -171,14 +171,14 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
                 url: apiUrl + "users/" + localStorage['id'] + "/increment_points",
                 dataType: "json"
                     }).done(function(response) {
-                    // response.points;
+                    response.points;
                     $('div[data-user-id="'+ response.id + '"]').html('<div class="score-users" data-user-id="' + response.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + response.name + ' | Points: ' + response.points + '</div>');
 
 
                 }).fail(function() {
                     alert("failed to increment points");
                 });
-            }
+            };
             // end of if statement
 
 
@@ -209,7 +209,7 @@ $('body').on("click", '#delete-moviequote-button', function(moviequotes) {
             $('#refresh-button').click();
     }).fail(function() {
         alert("failed to delete quote");
-            });
+            })
   });
 
 
