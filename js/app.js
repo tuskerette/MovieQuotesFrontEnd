@@ -192,11 +192,11 @@ $('body').on("click", '#submit-guess-button', function(moviequotes) {
 });
 
 
-// // FIX: trying to clean up the input guess field
-// $('body').on("click",'#new-guess', function() {
-//     console.log("i'm here, trying to clean");
-//             $(this).val(' ');
-//         });
+
+$('body').on("click",'#new-guess', function() {
+    console.log("i'm here, trying to clean");
+            $(this).val(' ');
+        });
 
 // Delete a Movie Quote (DELETE)
 $('body').on("click", '#delete-moviequote-button', function(moviequotes) {
