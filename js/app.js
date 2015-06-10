@@ -11,7 +11,7 @@ skrollr.init();
  $(".fancy_title").lettering();
 getPoints();
 
-
+// TODO: try to save the variables that I am going to use throughout the app.js file. Possibly using Localstorage.
 
 // Set the fictional users
 function setUsers(){
@@ -23,8 +23,9 @@ function setUsers(){
                 .done(function(users_data){
                     users_data.forEach(function(user){
                     userInfo[user.id] = user.name;
-
-                    $('.users').append('<button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + user.name + '</button>');
+                    // TODO:use Handlebars to make code lighter and less cloggy append.
+                    // TODO: figure out the backslash to make new line in jquery and have the append look nicer.
+                    $('.users').append(' <button type="button" class="button-users btn btn-default" data-user-id="' + user.id + '"><span class="glyphicon glyphicon-ice-lolly-tasted" aria-hidden="true"></span>' + user.name + '</button>');
 
 
 
@@ -128,6 +129,7 @@ $('#new-moviequote-button').click(function() {
     });
 
 // Submit a guess (POST)
+//TODO: put thought if I want to normalize the input guess (for example the space at the beginning)to match better the title in the DB
 $('body').on("click", '#submit-guess-button', function(moviequotes) {
     var thisMoviequoteId = $(this).attr('data-moviequote-id');
     var guess = $('#new-guess[data-moviequote-id="' + thisMoviequoteId + '"').val().toLowerCase();
