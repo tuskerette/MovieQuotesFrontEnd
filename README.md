@@ -6,7 +6,7 @@
 
 - This is a single page application.
 - The goal is to guess the movie title for movie quotes.
-- The app is visible at http://www.thewaukees.com/MovieQuotes/ (temporairily hosted)
+- The app is visible at [http://tuskerette.github.io/MovieQuotesFrontEnd/](http://tuskerette.github.io/MovieQuotesFrontEnd/).
 - This is the README file for the front end application. The API is hosted on HEROKU at this address: https://ancient-fortress-5331.herokuapp.com/
 
 * **Overview and Example usage**
